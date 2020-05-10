@@ -26,9 +26,25 @@ console.log('before fetch')
 
 
 const swapi = num => {
-    let url = "https://swapi.dev/api/people" + num
-    fetch(url)
+    let url = "https://swapi.dev/api/people/"
+    fetch(url  + num)
+    .then(data => data.json())
+    .then(obj =>{ 
+        console.log(obj)
+        return fetch(obj.homeworld)
+    })
+    .then(hwdata => hwdata.json())
+    .then(hwobj =>{
+        console.log(hwobj)
+    })
+    .catch(err => {
+        console.log('Error: ' + err)
+    })
 }
 
+swapi(1)
+swapi(Math.floor(Math.random()*10))
+
+// console.log(Math.floor(Math.random()*10))
 
 console.log('after fetch')
